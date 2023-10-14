@@ -6,6 +6,9 @@ state("DIABLO")
     string20 menupointer: "Storm.dll", 0x3BF14, 0xDBC;
     string20 menupointer2: "Storm.dll", 0x3BF14, 0xFEC;
     int loadremover: "USER32.dll", 0xAAF40;
+    int butcher: "Diablo.exe", 0x24D754;
+    int leoric: "Diablo.exe", 0x25193C;
+    int lazarus: "Diablo.exe", 0x24D754;
 }
 
 onReset
@@ -37,6 +40,10 @@ startup
     settings.Add("14", false, "Level 14", "Hell");
     settings.Add("15", false, "Level 15", "Hell");
     settings.Add("16", false, "Level 16", "Hell");
+    settings.Add("Bosses", false, "Bosses");
+    settings.Add("Butcher", false, "Butcher", "Bosses");
+    settings.Add("Leoric", false, "King Leoric", "Bosses");
+    settings.Add("Lazarus", false, "Archbishop Lazarus", "Bosses");
     settings.Add("Read This", true, "Read This");
     settings.SetToolTip("1", "Check this box if you want an automatic split when you reach Level 1");
     settings.SetToolTip("2", "Check this box if you want an automatic split when you reach Level 2");
@@ -54,8 +61,9 @@ startup
     settings.SetToolTip("14", "Check this box if you want an automatic split when you reach Level 14");
     settings.SetToolTip("15", "Check this box if you want an automatic split when you reach Level 15");
     settings.SetToolTip("16", "Check this box if you want an automatic split when you reach Level 16");
-    settings.SetToolTip("Read This", "If you're running with the default Any% Livesplit from Speedrun.com leave only Level 1 and Level 12 checked.");
+    settings.SetToolTip("Read This", "If you're running with the default Any% Livesplit from Speedrun.com leave only Level 1 and Level 12 checked");
     settings.SetToolTip("12a", "This box would make a second split after coming back from town to Level 12 (Teleport/Staff of Wizardry Grind)");
+    settings.SetToolTip("Bosses", "Check this box if you want an automatic split when you kill a specific boss");
 }
 
 start
@@ -79,6 +87,15 @@ split
 {
     if (current.diablo == 0 && old.diablo != 0){
         return true;
+    }
+    if (current.butcher == 0 && old.butcher != 0 && settings["Butcher"] == true){
+        return true;    
+    }
+    if (current.leoric == 0 && old.leoric != 0 && settings["Leoric"] == true){
+        return true;    
+    }
+    if (current.lazarus == 0 && old.lazarus != 0 && settings["Lazarus"] == true){
+        return true;    
     }   
     if(current.levelnumber > old.levelnumber && settings[current.levelnumber.ToString()]&& !vars.completedSplits.Contains(current.levelnumber.ToString())){
         vars.completedSplits.Add(current.levelnumber.ToString());
@@ -94,3 +111,4 @@ isLoading
 {
         return (current.loadremover == 3);    
 }
+
