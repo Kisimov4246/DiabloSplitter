@@ -88,15 +88,15 @@ split
     if (current.diablo == 0 && old.diablo != 0){
         return true;
     }
-    if (current.butcher == 0 && old.butcher != 0 && settings["Butcher"] == true){
-        return true;    
+if (current.butcher == 0 && old.butcher > 0 && settings["Butcher"] == true){
+        return true;
     }
-    if (current.leoric == 0 && old.leoric != 0 && settings["Leoric"] == true){
-        return true;    
+    if (current.leoric == 0 && old.leoric > 0 && settings["Leoric"] == true){
+        return true;
     }
-    if (current.lazarus == 0 && old.lazarus != 0 && settings["Lazarus"] == true){
-        return true;    
-    }   
+    if (current.lazarus == 0 && old.lazarus > 0 && settings["Lazarus"] == true){
+        return true;
+    }
     if(current.levelnumber > old.levelnumber && settings[current.levelnumber.ToString()]&& !vars.completedSplits.Contains(current.levelnumber.ToString())){
         vars.completedSplits.Add(current.levelnumber.ToString());
         return true;
